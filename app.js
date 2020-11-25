@@ -14,6 +14,10 @@ var resetPressed = true;
 
 init();
 
+/* initiate game
+ * set up buttons and squares
+ * fetch, set, and store score. Alter score as game process
+ */
 function init(){
 	setupModeButtons();
 	setupSquares();
@@ -28,6 +32,11 @@ function init(){
 	reset();
 }
 
+/* setup mode buttons
+ * turn rounded-end square images into buttons
+ * if the square is selected, it is removed from display.
+ * user can select the difficulty level of game and restart
+ */
 function setupModeButtons(){
 	for(var i = 0; i < modeButtons.length; i++){
 		modeButtons[i].addEventListener("click", function(){
@@ -40,6 +49,12 @@ function setupModeButtons(){
 	}
 }
 
+/* set up squares
+ * assign action that will execute the function
+ * when square is clicked on, compares current square color with winning color
+ * if colors match, display "correct", increase score and ask to play again
+ * if incorrect, display try again, reduce score, store score locally
+ */
 function setupSquares(){
 	for(var i = 0; i < squares.length; i++){
 	//add click listeners to squares
@@ -71,7 +86,11 @@ function setupSquares(){
 	}
 }
 
-
+/* udpate color name = updates color name in the head/top of display
+ * check the website for the color name
+ * if the color name is an exact match, it display the color name
+ * if the color name is not an exact match, it display the color name with an -ish
+ */
 async function updateColorName(){
 	const regex = /\([^\)]+\)/g; 
 	var rgbColors = pickedColor.match(regex); 
@@ -92,6 +111,11 @@ async function updateColorName(){
 	}
 }
 
+/* reset the colors for the squares if reset pressed
+ * use the generate random colors function to produce different colors equal to the number of squares
+ * reset the current colors with the newly generated colors
+ * for all squares, display the block with its new color
+ */
 function reset(){
 	resetPressed = true;
 	colors = generateRandomColors(numSquares);
@@ -113,10 +137,14 @@ function reset(){
 	h1.style.background = "steelblue";
 }
 
+
 resetButton.addEventListener("click", function(){
 	reset();
 })
 
+/* change colors for all squares
+ * using a for loop, change the color of the square at index i until all squares have been changed
+ */
 function changeColors(color){
 	//loop through all squares
 	for(var i = 0; i < squares.length; i++){
@@ -125,11 +153,22 @@ function changeColors(color){
 	}
 }
 
+/* generate a random index number for the colors array
+ * assign randomly selected color to the random variable
+ * the "random" variable is assigned to the index for the color array
+ */ 
 function pickColor(){
 	var random = Math.floor(Math.random() * colors.length);
 	return colors[random];
 }
 
+//
+
+/* assign random colors to an array.
+ * creates an empty array to hold a set of random colors
+ * using "for" loop to add to colors into array
+ * generates the colors to add by using the randomcolor function 
+ * returns arrays*/
 function generateRandomColors(num){
 	//make an array
 	var arr = []
@@ -142,6 +181,11 @@ function generateRandomColors(num){
 	return arr;
 }
 
+/* generate random color through randomizing RGB numbers
+ * generate a number from 0-255 for each color
+ * assignment number as value to corresponding RBG variable 
+ * return as RGB set when called
+ */
 function randomColor(){
 	//pick a "red" from 0 - 255
 	var r = Math.floor(Math.random() * 256);
